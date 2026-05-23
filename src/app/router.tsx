@@ -3,7 +3,7 @@ import { DashboardLayout } from '@/presentation/layouts/dashboard.layout';
 import { AlertsPage } from '@/presentation/pages/alerts.page';
 import { DashboardPage } from '@/presentation/pages/dashboard.page';
 import { MapPage } from '@/presentation/pages/map.page';
-import { ReportsPage } from '@/presentation/pages/reports.page';
+import { SensingPage } from '@/presentation/pages/sensing.page';
 
 export const appRouter = createBrowserRouter([
   {
@@ -13,7 +13,7 @@ export const appRouter = createBrowserRouter([
       { index: true, element: <DashboardPage /> },
       { path: 'alerts', element: <AlertsPage /> },
       { path: 'map', element: <MapPage /> },
-      { path: 'reports', element: <ReportsPage /> },
+      { path: 'sensing', element: <SensingPage /> },
     ],
   },
 ]);

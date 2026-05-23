@@ -3,4 +3,5 @@ export const queryKeys = {
   risks: ['risks'] as const,
   alerts: ['alerts'] as const,
   weather: ['weather'] as const,
+  sensing: ['sensing'] as const,
 };
