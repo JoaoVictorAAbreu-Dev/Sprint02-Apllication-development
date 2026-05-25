@@ -29,6 +29,7 @@ const weatherCodeMap: Record<number, string> = {
 const getWeatherCondition = (code: number) => weatherCodeMap[code] ?? 'Condição indisponível';
 
 export const toWeatherSnapshot = (locality: Locality, current: OpenMeteoCurrentDto): WeatherSnapshot => {
+  // Converte o contrato externo da API para o formato de dominio consumido pela UI.
   return {
     localityName: locality.name,
     latitude: locality.latitude,

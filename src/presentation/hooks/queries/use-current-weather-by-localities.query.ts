@@ -4,6 +4,7 @@ import { weatherService } from '@/infrastructure/services/weather.service';
 import { queryKeys } from '@/shared/constants/query-keys';
 
 export const useCurrentWeatherByLocalitiesQuery = (localities: Locality[]) => {
+  // A chave inclui coordenadas para invalidar cache quando a lista de pontos muda.
   const localityKey = localities.map((item) => `${item.latitude},${item.longitude}`).join('|');
 
   return useQuery({

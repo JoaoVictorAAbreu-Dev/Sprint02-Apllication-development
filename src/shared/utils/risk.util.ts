@@ -5,6 +5,7 @@ const clamp = (value: number, min: number, max: number) => Math.max(min, Math.mi
 export type RiskLevel = 'Baixo' | 'Moderado' | 'Alto' | 'Critico';
 
 export const calculateRiskScore = (item: WeatherSnapshot) => {
+  // Normaliza variaveis climaticas em escala 0-100 para combinar pesos diferentes.
   const temperatureFactor = clamp(((item.temperatureC - 20) / 25) * 100, 0, 100);
   const windFactor = clamp(((item.windSpeedKmh - 10) / 50) * 100, 0, 100);
   const precipitationFactor = clamp((item.precipitationMm / 30) * 100, 0, 100);
@@ -17,6 +18,7 @@ export const calculateRiskScore = (item: WeatherSnapshot) => {
 };
 
 export const isAlertPoint = (item: WeatherSnapshot) =>
+  // Regras simples de alerta imediato para destacar pontos criticos.
   item.temperatureC >= 35 || item.windSpeedKmh >= 45 || item.precipitationMm >= 20;
 
 export const getRiskLevel = (score: number): RiskLevel => {

@@ -15,6 +15,7 @@ export const sensingService = {
     const limit = params?.limit ?? 10;
     const region = params?.region ?? DEFAULT_MONITORED_REGION;
 
+    // Usa busca textual do Nominatim para obter rapidamente pontos iniciais de monitoramento.
     const response = await nominatimClient.get<NominatimLocalityDto[]>('/search', {
       params: {
         q: region,

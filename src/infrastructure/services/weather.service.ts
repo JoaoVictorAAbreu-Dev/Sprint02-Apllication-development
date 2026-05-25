@@ -16,6 +16,7 @@ const CURRENT_FIELDS = [
 export const weatherService = {
   async getCurrentWeatherByLocality(locality: Locality): Promise<WeatherSnapshot> {
     try {
+      // Consulta somente campos atuais para reduzir payload e latencia da API externa.
       const response = await openMeteoClient.get<OpenMeteoForecastDto>('/v1/forecast', {
         params: {
           latitude: locality.latitude,
@@ -35,6 +36,7 @@ export const weatherService = {
   },
 
   async getCurrentWeatherByLocalities(localities: Locality[]): Promise<WeatherSnapshot[]> {
+    // Executa em paralelo para evitar custo linear de chamadas sequenciais.
     const snapshots = await Promise.all(localities.map((locality) => this.getCurrentWeatherByLocality(locality)));
     return snapshots;
   },
