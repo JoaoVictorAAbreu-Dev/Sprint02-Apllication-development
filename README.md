@@ -1,73 +1,48 @@
-# React + TypeScript + Vite
+﻿# Sprint02 - Application Development
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Painel web para monitoramento de localidades com indicadores climaticos, visualizacao em mapa e classificacao de risco.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js 22+
+- npm 10+
 
-## React Compiler
+## Configuracao
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Instale dependencias:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Configure variaveis de ambiente:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cp .env.example .env
 ```
+
+## Scripts
+
+- `npm run dev`: sobe ambiente local com Vite
+- `npm run lint`: valida padrao de codigo
+- `npm run test`: executa testes unitarios
+- `npm run test:watch`: executa testes em watch mode
+- `npm run typecheck`: valida tipos TypeScript
+- `npm run build`: gera build de producao
+- `npm run preview`: serve build localmente
+
+## Arquitetura
+
+- `src/domain`: entidades de negocio
+- `src/application`: DTOs e mapeadores
+- `src/infrastructure`: clientes HTTP e servicos externos
+- `src/presentation`: paginas, componentes e hooks
+- `src/shared`: utilitarios, constantes e configuracoes transversais
+
+## Testes
+
+Testes unitarios em `tests/unit` cobrindo utilitarios de risco e mapeamento de clima.
+
+## Build
+
+As rotas principais usam lazy loading para reduzir o bundle inicial.
