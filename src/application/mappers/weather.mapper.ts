@@ -1,4 +1,4 @@
-import type { OpenMeteoCurrentDto } from '@/application/dto/open-meteo.dto';
+﻿import type { OpenMeteoCurrentDto } from '@/application/dto/open-meteo.dto';
 import type { Locality } from '@/domain/entities/locality.entity';
 import type { WeatherSnapshot } from '@/domain/entities/weather.entity';
 

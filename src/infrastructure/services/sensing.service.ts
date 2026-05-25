@@ -1,4 +1,4 @@
-import type { NominatimLocalityDto } from '@/application/dto/nominatim.dto';
+﻿import type { NominatimLocalityDto } from '@/application/dto/nominatim.dto';
 import { toLocality } from '@/application/mappers/locality.mapper';
 import type { Locality } from '@/domain/entities/locality.entity';
 import { nominatimClient } from '@/infrastructure/http/nominatim.client';
