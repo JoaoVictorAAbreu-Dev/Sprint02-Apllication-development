@@ -1,9 +1,17 @@
 import { useMonitoredLocalitiesQuery } from '@/presentation/hooks/queries/use-monitored-localities.query';
+import { useCurrentWeatherByLocalitiesQuery } from '@/presentation/hooks/queries/use-current-weather-by-localities.query';
 
 export const SensingPage = () => {
   const { data, isLoading, isError, error, refetch, isFetching } = useMonitoredLocalitiesQuery({
     limit: 10,
   });
+  const {
+    data: weatherData,
+    isLoading: isWeatherLoading,
+    isError: isWeatherError,
+    error: weatherError,
+    refetch: refetchWeather,
+  } = useCurrentWeatherByLocalitiesQuery(data ?? []);
 
   if (isLoading) {
     return (
@@ -62,6 +70,56 @@ export const SensingPage = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="mt-8">
+        <h3 className="text-base font-semibold text-slate-900">Condições climáticas atuais (Open-Meteo)</h3>
+
+        {isWeatherLoading && <p className="mt-2 text-sm text-slate-600">Carregando clima dos pontos...</p>}
+
+        {isWeatherError && (
+          <div className="mt-2 rounded-md border border-rose-200 bg-rose-50 p-3">
+            <p className="text-sm text-rose-700">
+              Falha ao carregar clima: {weatherError instanceof Error ? weatherError.message : 'erro desconhecido'}
+            </p>
+            <button
+              type="button"
+              onClick={() => void refetchWeather()}
+              className="mt-3 rounded-md bg-rose-600 px-3 py-2 text-sm font-medium text-white hover:bg-rose-700"
+            >
+              Tentar novamente
+            </button>
+          </div>
+        )}
+
+        {!isWeatherLoading && !isWeatherError && (
+          <div className="mt-3 overflow-x-auto">
+            <table className="min-w-full divide-y divide-slate-200">
+              <thead>
+                <tr className="text-left text-xs uppercase tracking-wide text-slate-500">
+                  <th className="py-2 pr-4">Nome</th>
+                  <th className="py-2 pr-4">Temperatura</th>
+                  <th className="py-2 pr-4">Umidade</th>
+                  <th className="py-2 pr-4">Vento</th>
+                  <th className="py-2 pr-4">Precipitação</th>
+                  <th className="py-2 pr-4">Condição</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
+                {weatherData?.map((item) => (
+                  <tr key={`${item.localityName}-${item.latitude}-${item.longitude}`}>
+                    <td className="py-2 pr-4">{item.localityName}</td>
+                    <td className="py-2 pr-4">{item.temperatureC.toFixed(1)} °C</td>
+                    <td className="py-2 pr-4">{item.humidityPct.toFixed(0)}%</td>
+                    <td className="py-2 pr-4">{item.windSpeedKmh.toFixed(1)} km/h</td>
+                    <td className="py-2 pr-4">{item.precipitationMm.toFixed(1)} mm</td>
+                    <td className="py-2 pr-4">{item.weatherCondition}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </section>
   );

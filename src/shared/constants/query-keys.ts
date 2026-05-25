@@ -4,4 +4,5 @@ export const queryKeys = {
   alerts: ['alerts'] as const,
   weather: ['weather'] as const,
   sensing: ['sensing'] as const,
+  sensingWeather: ['sensing-weather'] as const,
 };
