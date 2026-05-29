@@ -131,3 +131,42 @@ Para continuidade do projeto, recomenda-se:
 - ampliar testes de integracao dos servicos HTTP;
 - incluir testes de interface para paginas criticas;
 - formalizar pipeline CI com lint, testes e build em pull requests.
+
+## 14. Video Pitch
+
+- Link do video pitch (1 minuto): `https://SEU-LINK-AQUI`
+
+## 15. Evidencias visuais (prints)
+
+Adicione as imagens abaixo na pasta `docs/screenshots/` para facilitar avaliacao rapida:
+
+- Dashboard executivo: `docs/screenshots/dashboard.png`
+- Mapa de monitoramento: `docs/screenshots/mapa.png`
+- Sensoriamento (localidades): `docs/screenshots/sensoriamento-localidades.png`
+- Sensoriamento (clima): `docs/screenshots/sensoriamento-clima.png`
+- Alertas operacionais: `docs/screenshots/alertas.png`
+
+Exemplo de inclusao no README:
+
+```md
+![Dashboard](docs/screenshots/dashboard.png)
+![Mapa](docs/screenshots/mapa.png)
+![Sensoriamento - Localidades](docs/screenshots/sensoriamento-localidades.png)
+![Sensoriamento - Clima](docs/screenshots/sensoriamento-clima.png)
+![Alertas](docs/screenshots/alertas.png)
+```
+
+## 16. Garantia de 10 localidades monitoradas
+
+Para manter consistencia da apresentacao de sensoriamento:
+
+- o sistema consulta o Nominatim com `limit=10`;
+- se a API retornar menos pontos (ou falhar), um fallback fixo de 10 regioes reais e aplicado;
+- o clima e consultado por coordenada para todos os pontos finais.
+
+## 17. Checklist de entrega final
+
+- Projeto zipado com codigo-fonte.
+- Arquivo `integrantes.txt` no pacote final.
+- Link do video pitch no README.
+- (Opcional) Link do repositorio GitHub, se aceito pelo professor.
