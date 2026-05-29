@@ -1,5 +1,6 @@
-﻿import { useMonitoredLocalitiesQuery } from '@/presentation/hooks/queries/use-monitored-localities.query';
 import { useCurrentWeatherByLocalitiesQuery } from '@/presentation/hooks/queries/use-current-weather-by-localities.query';
+import { useMonitoredLocalitiesQuery } from '@/presentation/hooks/queries/use-monitored-localities.query';
+import { buildFictitiousSensingSnapshot } from '@/shared/utils/sensing-simulation.util';
 
 export const SensingPage = () => {
   const { data, isLoading, isError, error, refetch, isFetching } = useMonitoredLocalitiesQuery({
@@ -73,7 +74,46 @@ export const SensingPage = () => {
       </div>
 
       <div className="mt-8">
-        <h3 className="text-base font-semibold text-slate-900">Condições climáticas atuais (Open-Meteo)</h3>
+        <h3 className="text-base font-semibold text-slate-900">Sensoriamento ficticio por localidade</h3>
+        <p className="mt-2 text-sm text-slate-600">
+          Indicadores sinteticos de vegetacao, solo, qualidade do ar e foco termico.
+        </p>
+
+        {isWeatherLoading && <p className="mt-2 text-sm text-slate-600">Calculando indicadores de sensores...</p>}
+
+        {!isWeatherLoading && !isWeatherError && (
+          <div className="mt-3 overflow-x-auto">
+            <table className="min-w-full divide-y divide-slate-200">
+              <thead>
+                <tr className="text-left text-xs uppercase tracking-wide text-slate-500">
+                  <th className="py-2 pr-4">Nome</th>
+                  <th className="py-2 pr-4">Estresse de vegetacao</th>
+                  <th className="py-2 pr-4">Umidade do solo</th>
+                  <th className="py-2 pr-4">Indice de qualidade do ar</th>
+                  <th className="py-2 pr-4">Foco termico</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
+                {weatherData?.map((item) => {
+                  const sensing = buildFictitiousSensingSnapshot(item);
+                  return (
+                    <tr key={`sensing-${item.localityName}-${item.latitude}-${item.longitude}`}>
+                      <td className="py-2 pr-4">{item.localityName}</td>
+                      <td className="py-2 pr-4">{sensing.vegetationStressPct.toFixed(1)}%</td>
+                      <td className="py-2 pr-4">{sensing.soilMoisturePct.toFixed(1)}%</td>
+                      <td className="py-2 pr-4">{sensing.airQualityIndex}</td>
+                      <td className="py-2 pr-4">{sensing.heatFocusC.toFixed(1)} degC</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      <div className="mt-8">
+        <h3 className="text-base font-semibold text-slate-900">Condicoes climaticas atuais (Open-Meteo)</h3>
 
         {isWeatherLoading && <p className="mt-2 text-sm text-slate-600">Carregando clima dos pontos...</p>}
 
@@ -101,15 +141,15 @@ export const SensingPage = () => {
                   <th className="py-2 pr-4">Temperatura</th>
                   <th className="py-2 pr-4">Umidade</th>
                   <th className="py-2 pr-4">Vento</th>
-                  <th className="py-2 pr-4">Precipitação</th>
-                  <th className="py-2 pr-4">Condição</th>
+                  <th className="py-2 pr-4">Precipitacao</th>
+                  <th className="py-2 pr-4">Condicao</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
                 {weatherData?.map((item) => (
                   <tr key={`${item.localityName}-${item.latitude}-${item.longitude}`}>
                     <td className="py-2 pr-4">{item.localityName}</td>
-                    <td className="py-2 pr-4">{item.temperatureC.toFixed(1)} °C</td>
+                    <td className="py-2 pr-4">{item.temperatureC.toFixed(1)} degC</td>
                     <td className="py-2 pr-4">{item.humidityPct.toFixed(0)}%</td>
                     <td className="py-2 pr-4">{item.windSpeedKmh.toFixed(1)} km/h</td>
                     <td className="py-2 pr-4">{item.precipitationMm.toFixed(1)} mm</td>

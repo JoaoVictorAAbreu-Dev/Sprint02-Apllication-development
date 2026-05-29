@@ -2,6 +2,7 @@ import { RiskScoreCard } from '@/presentation/components/shared/risk-score-card'
 import { SummaryCard } from '@/presentation/components/shared/summary-card';
 import { useCurrentWeatherByLocalitiesQuery } from '@/presentation/hooks/queries/use-current-weather-by-localities.query';
 import { useMonitoredLocalitiesQuery } from '@/presentation/hooks/queries/use-monitored-localities.query';
+import { buildFictitiousSensingSnapshot } from '@/shared/utils/sensing-simulation.util';
 import { calculateRiskScore, getRiskLevel, isAlertPoint } from '@/shared/utils/risk.util';
 
 export const DashboardPage = () => {
@@ -45,12 +46,15 @@ export const DashboardPage = () => {
 
   const localities = localitiesQuery.data ?? [];
   const weather = weatherQuery.data ?? [];
+  const sensing = weather.map(buildFictitiousSensingSnapshot);
 
   const monitoredPoints = localities.length;
   const averageTemperature =
     weather.length > 0 ? weather.reduce((sum, item) => sum + item.temperatureC, 0) / weather.length : 0;
   const averageWindSpeed =
     weather.length > 0 ? weather.reduce((sum, item) => sum + item.windSpeedKmh, 0) / weather.length : 0;
+  const averageVegetationStress =
+    sensing.length > 0 ? sensing.reduce((sum, item) => sum + item.vegetationStressPct, 0) / sensing.length : 0;
   const alertPoints = weather.filter(isAlertPoint).length;
 
   const riskByPoint = weather.map((item) => ({
@@ -71,15 +75,16 @@ export const DashboardPage = () => {
       <header className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
         <h2 className="text-2xl font-semibold text-slate-900">Dashboard Executivo</h2>
         <p className="mt-2 text-sm text-slate-600">
-          Visao consolidada dos pontos monitorados com indicadores climaticos e risco operacional.
+          Visao consolidada de sensoriamento, localidades monitoradas e condicoes climaticas.
         </p>
       </header>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <SummaryCard title="Pontos monitorados" value={String(monitoredPoints)} />
         <SummaryCard title="Temperatura media" value={`${averageTemperature.toFixed(1)} degC`} />
         <SummaryCard title="Pontos em alerta" value={String(alertPoints)} />
-        <SummaryCard title="Velocidade media do vento" value={`${averageWindSpeed.toFixed(1)} km/h`} />
+        <SummaryCard title="Vento medio" value={`${averageWindSpeed.toFixed(1)} km/h`} />
+        <SummaryCard title="Estresse medio da vegetacao" value={`${averageVegetationStress.toFixed(1)}%`} />
       </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
