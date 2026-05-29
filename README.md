@@ -138,23 +138,20 @@ Para continuidade do projeto, recomenda-se:
 
 ## 15. Evidencias visuais (prints)
 
-Adicione as imagens abaixo na pasta `docs/screenshots/` para facilitar avaliacao rapida:
+### Dashboard Executivo
+![Dashboard Executivo](docs/screenshots/dashboard.png)
 
-- Dashboard executivo: `docs/screenshots/dashboard.png`
-- Mapa de monitoramento: `docs/screenshots/mapa.png`
-- Sensoriamento (localidades): `docs/screenshots/sensoriamento-localidades.png`
-- Sensoriamento (clima): `docs/screenshots/sensoriamento-clima.png`
-- Alertas operacionais: `docs/screenshots/alertas.png`
+### Mapa de Monitoramento
+![Mapa de Monitoramento](docs/screenshots/mapa.png)
 
-Exemplo de inclusao no README:
-
-```md
-![Dashboard](docs/screenshots/dashboard.png)
-![Mapa](docs/screenshots/mapa.png)
+### Sensoriamento - Localidades
 ![Sensoriamento - Localidades](docs/screenshots/sensoriamento-localidades.png)
-![Sensoriamento - Clima](docs/screenshots/sensoriamento-clima.png)
-![Alertas](docs/screenshots/alertas.png)
-```
+
+### Sensoriamento - Condicoes Climaticas
+![Sensoriamento - Condicoes Climaticas](docs/screenshots/sensoriamento-clima.png)
+
+### Alertas Operacionais
+![Alertas Operacionais](docs/screenshots/alertas.png)
 
 ## 16. Garantia de 10 localidades monitoradas
 
